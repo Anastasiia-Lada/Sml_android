@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript" src="touch/microloader/development.js"></script>
+	<!-- <script type="text/javascript" src="touch/sencha-touch-all.js"></script> -->
+	<script type="text/javascript">
+
+		Ext.onReady(
+			function () {
+				Ext.define('SearchRes1', {
+					extend: 'Ext.data.Model',
+
+					config: {
+						identifier: 'sequential',
+						fields: [
+							{ name: 'memberId', type: 'string' },
+							{ name: 'deviceId', type: 'string' },
+						],
+						proxy: {
+							type: 'localstorage',
+							id: 'test_member'
+						}
+					}
+				});
+				var store = Ext.create('Ext.data.Store', {
+					model: 'SearchRes1',
+					autoLoad: true,
+					autoSync: true,
+					storeId: 'test_member_store',
+					listeners: {
+						load: function () {
+						},
+						refresh: function () {
+						}
+						//store.sync(); }
+					},
+					data: [
+					]
+				});
+				Ext.create('Ext.Panel', {
+					fullscreen: true,
+					layout: { type: 'vbox', align: 'center' },
+					items:
+						[
+							{
+								xtype: 'button',
+								ui: 'action',
+								text: 'setMemberId',
+								width: 300,
+								height: 100,
+								
+								listeners:
+									{
+										tap: function () {
+											alert(Services.User.setMemberId(s4()));
+											
+										}
+									}
+							},
+							{
+								xtype: 'button',
+								ui: 'action',
+								text: 'getMemberId',
+								width: 300,
+								height: 100,
+
+								listeners:
+									{
+										tap: function () {
+											
+											alert(Services.User.getMemberId());
+										}
+									}
+							},
+							{
+								xtype: 'button',
+								ui: 'action',
+								text: 'setDeviceId',
+								width: 300,
+								height: 100,
+
+								listeners:
+									{
+										tap: function () {
+
+											alert(Services.User.setDeviceId());
+										}
+									}
+							}
+
+
+						]
+				});
+				alert('done');
+				
+			});
+
+
+
+		Services = {};
+
+		
+
+		Services.User = {};
+
+		Services.User.setDeviceId = function () {
+			var record = Services.User.getMemberRecord();
+
+			//set deviceId to local storage
+			if (!record.deviceId) {
+				var record = Services.User.getMemberStore().add({ memberId: null, deviceId: guid() });
+				//set;
+			}
+			Services.User.save(record);
+			return "";
+		}
+
+		Services.User.setMemberId = function (id) {
+			var record = Services.User.getMemberRecord();
+			record.set("memberId", id);
+			Services.User.save(record);
+			return 'is set';
+		}
+
+		Services.User.getMemberId = function () {
+			return Services.User.getMemberRecord().get("memberId");
+		}
+
+		Services.User.getMemberStore = function () {
+			memberStore = Ext.getStore('test_member_store');
+			return memberStore;
+		}
+
+		Services.User.save = function (record) {
+			var st = Services.User.getMemberStore();
+			st.getAt(0).setData(record);
+
+			alert(record);
+			console.log(record.valueOf());
+		}
+
+		Services.User.getMemberRecord = function () {
+			var st = Services.User.getMemberStore();
+			if (st.getCount() == 0) {
+				//TODO: create record
+				//st.add({ memberId: null, deviceId: guid() });
+				var record = st.add({ memberId: null, deviceId: null });
+				Services.User.save(record);
+			}
+			return st.getAt(0);
+		}
+		function guid() {
+			return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+
+		}
+
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		}
+
+	</script>
+</body>
+</html>
