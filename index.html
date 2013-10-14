@@ -125,7 +125,7 @@
    
 
     function fb_login() {
-        FB.getLoginStatus(updateStatusCallback);
+        FB.getLoginStatus(updateStatusCallback, true);
     }
 
     function updateStatusCallback(response) {
@@ -155,7 +155,7 @@
                 //alert(response.authResponse.accessToken);
                 loginToServer();
             }
-        }, { scope: 'email' });        
+        }, { scope: 'email, read_stream' });        
     }
     function revoke() {
         FB.init({
