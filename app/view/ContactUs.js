@@ -33,23 +33,15 @@ Ext.define('smiley360.view.ContactUs', {
 				}],
 			}, {
 				xtype: 'panel',
-				cls: 'popup-status-indicator',
-				style: 'background-color: #E2DDDA; z-index: 0; margin-bottom: -5px;'				
-			}, {
-				xtype: 'panel',
 				id: 'xStatusIndicator',
 				cls: 'popup-status-indicator',
-				style: 'background-color: #E2DDDA;'
 			}, {
-				xtype: 'container',
-				cls: 'has-shadow',
-				layout: 'hbox',
+				xtype: 'panel',
+				cls: 'popup-bottom-panel popup-status-container',
 				items: [{
 					xtype: 'label',
+					cls: 'popup-message-title',
 					html: 'SEND US A MESSAGE',
-					cls: 'heading-text active-sign',
-					style: 'padding-left: 15px;',
-					flex: 1
 				}],
 			}, {
 				xtype: 'panel',
@@ -86,7 +78,7 @@ Ext.define('smiley360.view.ContactUs', {
 				cls: 'popup-button-panel',
 				items: [{
 					xtype: 'button',
-					id: 'xShareButton',
+					id: 'xSendButton',
 					text: 'SEND MESSAGE',
 					icon: 'resources/images/share-initial.png',
 					iconAlign: 'right',
@@ -94,7 +86,8 @@ Ext.define('smiley360.view.ContactUs', {
 					cls: 'popup-submit-button',
 					listeners: {
 						tap: function () {
-							Ext.getCmp('xView').doSendMessage();							
+							//Ext.getCmp('xView').doSendMessage();
+							Ext.getCmp('xView').hide();
 						}
 					},
 				}],

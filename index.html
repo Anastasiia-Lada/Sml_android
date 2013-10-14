@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <meta charset="UTF-8">
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <title>S360</title>
     <style type="text/css">
         /**
@@ -74,34 +76,25 @@
 </head>
 <body style="background-color: #1f88c0">
         
-        <div id="data">loading ...</div>
+        <div id="data"></div>
         <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
         <div id="fb-root"></div>
                
         <script>
             
+             <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+            var toServer = false;
+            var saved_controller_obj = {};
     if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
     if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
     if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-    //window.FBConfig = {};
-    //window.FBConfig.rootDomain = "http://uat.smiley360.com/ws/includes/";
-    //window.FBConfig.domain = window.FBConfig.rootDomain + "oauth/";
-    //window.FBConfig.appId = '104171846376854';
-    //var channelUrl = '//' + window.FBConfig.domain + 'channel.php';
-
-    //FB.init({
-    //    appId: '104171846376854',           // App ID from the app dashboard
-    //    nativeInterface: CDV.FB,
-    //    //channelUrl: channelUrl, // Channel file for x-domain comms
-    //    status: true,           // Check Facebook Login status
-    //    cookie: true,           // enable cookies to allow the server to access the session
-    //    oauth: true,            // enable OAuth 2.0
-    //    xfbml: false,           // Look for social plugins on the page
-    //});
-
     FB.Event.subscribe('auth.login', function (response) {
         //alert('auth.login event');
+        //(toServer) ?
+        loginToServer();
+        //find_member();
+
     });
 
     FB.Event.subscribe('auth.logout', function (response) {
@@ -112,104 +105,74 @@
         //alert('auth.sessionChange event');
     });
 
-    FB.Event.subscribe('auth.statusChange', handleStatusChange);
+    //FB.Event.subscribe('auth.statusChange', handleStatusChange);
 
-    //FB.Event.subscribe('auth.statusChange', function (response) {
-    //    //alert('auth.statusChange event');
-    //});
+    FB.Event.subscribe('auth.statusChange', function (response) {
+        //alert('auth.statusChange event');
+    });
 
-    FB.Event.subscribe('auth.authResponseChange', handleStatusChange);
-        //function (response) {
+    FB.Event.subscribe('auth.authResponseChange',
+        function (response) {
             //alert('auth.ResponseChange');
             //alert(response.status);
             //alert(response.authResponse.accessToken);// + '<br>' + response.authResponse.expiresIn + '<br>' + response.authResponse.userID);
-            
-        //});
-
+            //FB.getLoginStatus(updateStatusCallback);
+        });
     
-    var friendIDs = [];
-    var fdata;
     function me() { };
-    
-    var user = [];
 
     var permissions = ['email', 'offline_access', 'read_stream'];
-
-    //Detect when Facebook tells us that the user's session has been returned
-    
-    // Handle status changes
-    function handleStatusChange(session) {
-        alert('auth.statusChange event');
-        //FB.getLoginStatus(updateStatusCallback);
-        console.log('Got the user\'s session: ' + JSON.stringify(session));
-
-        if (session.authResponse) {
-            //document.body.className = 'connected';
-
-            //Fetch user's id, name, and picture
-            FB.api('/me', {
-                fields: 'name'
-            },
-            function (response) {
-                if (!response.error) {
-                    //document.body.className = 'connected';
-                    alert('connected');
-                    user = response;
-
-                    alert('Got the user\'s name : ' + JSON.stringify(response.name));
-                } else {
-                    alert('not_connected');
-                    console.log('Error getting user info: ' + JSON.stringify(response.error));
-                    // Check for errors due to app being unininstalled
-                    if (response.error.error_subcode && response.error.error_subcode == "458") {
-                        setTimeout(function () {
-                            alert("The app was removed. Please log in again.");
-                        }, 0);
-                    }
-                    logout();
-                }
-
-                clearAction();
-            });
-        }
-        else {
-            alert('not_connected');
-
-            clearAction();
-        }
-    }
+   
 
     function fb_login() {
         FB.getLoginStatus(updateStatusCallback);
     }
 
-    //Prompt the user to login and ask for the 'email' permission
-    function login() {
-        
-        FB.login(function (response) {
-            handleStatusChange(response);
-        }, { scope: 'email' , auth_type: 'reauthenticate'});
-        
-    }
     function updateStatusCallback(response) {
-        FB.invalidateAccessToken(function (response) {
-            alert(JSON.stringify(response));
-        });
         if (response.status === 'connected') {
-            // connected
-            //if ((getURLParameter('scope') || '').indexOf('publish_stream') > -1) {
-            //    login();
-            //}
-            //alert('server login');
-            find_member();
+            
+            alert('You are already connected to Facebook!');
+            revoke();
+            //loginToServer();
         }
         else if (response.status === 'not_authorized') {
+            alert('You are not authorized on Facebook!');
             // not_authorized
             login();
         } else {
             // not_logged_in
+            alert('You are not logged in with Facebook! Please, log in!');
             login();
         }
+    }
+
+    function login() {
+        //toServer = true;
+        FB.login(function (response) {
+            if (response.authResponse) {                
+               // alert('GoLogin');
+                //toServer = false;
+                //alert(response.authResponse.accessToken);
+                loginToServer();
+            }
+        }, { scope: 'email' });        
+    }
+    function revoke() {
+        FB.init({
+            appId: "104171846376854",
+            nativeInterface: CDV.FB,
+            useCachedDialogs: false,
+            status: true,           // Check Facebook Login status
+            cookie: true,           // enable cookies to allow the server to access the session
+            oauth: true,            // enable OAuth 2.0
+            xfbml: false,
+        });
+        //FB.login(function (response) {
+        //    if (response.authResponse) {                
+        //        alert('Revoke');
+        //        alert(response.authResponse.accessToken);
+        //    }
+        //}, { scope: 'email, offline_access, read_stream, publish_stream' });
     }
 
     function loginToServer() {
@@ -219,8 +182,6 @@
                 guid: smiley360.services.getDeviceId(),//getURLParameter('deviceId'),
                 fbtoken: FB.getAccessToken(),
             };
-            
-            //alert(JSON.stringify(params));
 
             $.ajax({
                 dataType: "json",
@@ -236,77 +197,15 @@
                     //window.history.go(-(window.history.length - 1));
                 },
                 error: function (xhr, status, error) {
-
                     alert(xhr.responseText);//'ajax request failed');
                 }
             });
         });
     }
+
     function find_member() {
-        //var me = Ext.getCmp('ParentController');
-        Ext.getCmp('xLoginView').fireEvent('goTryLoginUser');
-
-        //smiley360.services.getMemberIdByDeviceId(deviceId,
-        //function (response) {
-        //    if (response.success) {
-        //        console.log('Index -> [tryLoginUser] with received memberId:' + response.ID);
-
-        //        me.updateMemberId(response.ID);
-        //        me.loadMemberData(response.ID, function () {
-        //            smiley360.animateViewLeft('mainview');
-        //            smiley360.destroySplash();
-        //            isLoadedApp = true;
-        //            var cmp_tool = me.getToolId();
-        //            if (cmp_tool == 'sharetofacebookview') {
-        //                Ext.getCmp('xMainView').showExternalView('detailsview');
-        //                Ext.getCmp('xMainView').down('#xTabpanel').down('#xDetailsView').showSharePanel();
-        //            };
-
-        //            if (cmp_tool == 'sharetotwitterview') {
-        //                Ext.getCmp('xMainView').showExternalView('detailsview');
-        //                Ext.getCmp('xMainView').down('#xTabpanel').down('#xDetailsView').showSharePanel();
-        //            };
-        //            if (cmp_tool == 'uploadphotoview') {
-        //                Ext.getCmp('xMainView').showExternalView('detailsview');
-        //                Ext.getCmp('xMainView').down('#xTabpanel').down('#xDetailsView').showSharePanel();
-
-        //            };
-        //        });
-        //    }
-        //    else {
-        //        console.log('Index -> [tryLoginUser] don\'t received memberId for deviceId:' + deviceId);
-        //        var cmp_tool = me.getToolId();
-        //        if (response.memberID == 0) {
-        //            if (cmp_tool == 'login') {
-        //                Ext.Msg.alert('ERROR', 'Oops something went wrong!' +
-        //                    '<br>The email address on your Facebook account may already be in use, or Facebook may be blocking the operation. Please contact us for details!');
-        //                me.updateDeviceId();
-        //            }
-        //            else
-        //                me.updateDeviceId();
-        //        };
-        //        smiley360.animateViewLeft('loginview');
-        //        smiley360.destroySplash();
-        //        isLoadedApp = true;
-        //    }
-        //});
-    }
-
-    function logout() {
-        FB.api('/me/permissions', 'DELETE',
-          function (response) {
-              //window.location.reload();
-              // For may instead call logout to clear
-              // cache data, ex: using in a PhoneGap app
-              alert('APP Uninstalled');
-              logout_();
-          });
-    }
-
-    function logout_() {
-        FB.logout(function (response) {
-            window.location.reload();
-        });
+        //var me = Ext.app.getController('ParentController');
+        saved_controller_obj.tryLoginUser();
     }
 
     document.addEventListener('deviceready', function () {
@@ -320,7 +219,7 @@
             xfbml: false,
         });
         document.getElementById('data').innerHTML = "";
-        
+        navigator.splashscreen.hide();
        
     }, false);
             </script>

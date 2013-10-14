@@ -7,8 +7,8 @@
 	<name>Smiley360</name>
 	
 	<!-- Customize your app and platform with the preference element. -->
-	<preference name="phonegap-version" value="2.7.0" />
-	<preference name="orientation"                value="default" />
+	<preference name="phonegap-version" value="2.5.0" />
+	<preference name="orientation"                value="portrait" />
 	<!-- all: default means both landscape and portrait are enabled -->
 	<preference name="target-device"              value="universal" />
 	<!-- all: possible values handset, tablet, or universal -->
@@ -28,16 +28,16 @@
 	
 	<!--<gap:plugin name="clipboardmanager" value="com.saatcioglu.phonegap.clipboardmanager.ClipboardManagerPlugin.ClipboardManagerPlugin" />-->
 	
-	<gap:splash src="resources/images/loadingimage_x1_iphone.png" gap:platform="ios" width="320" height="480" />
+	<gap:splash src="resources/images/splash.png" gap:platform="ios" width="320" height="480" />
 	<gap:splash src="resources/images/iphone4LoadingImage.png" gap:platform="ios" width="640" height="960" />
 	<gap:splash src="resources/images/iPhone5LoadingImage.png" gap:platform="ios" width="640" height="1136" />
 	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="ios" width="1024" height="748" />
 	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="ios" width="768" height="1004" />
 
-	<gap:splash src="resources/images/loadingimage_x1_iphone.png"  gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="resources/images/iphone4LoadingImage.png"  gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="resources/images/iPhone5LoadingImage.png"  gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="resources/images/loadingimage-r2.png" gap:platform="android" gap:density="xhdpi" />
+	<gap:splash src="resources/images/loadingimage-r2.png"  gap:platform="android" gap:density="ldpi" />
+    	<gap:splash src="resources/images/loadingimage-r2.png"  gap:platform="android" gap:density="mdpi" />
+    	<gap:splash src="resources/images/loadingimage-r2.png"  gap:platform="android" gap:density="hdpi" />
+    	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="android" gap:density="xhdpi" />
 
 
 <!-- retina iPad support: PhoneGap 2.5.0+ only -->
@@ -48,19 +48,7 @@
     		<param name="APP_ID" value="104171846376854" />
     		<param name="APP_NAME" value="Smiley360 Staging" />
 	</gap:plugin>
-	<gap:url-scheme name="com.uat.smiley360" role="None">
-  		
- 			<scheme><key>CFBundleURLTypes</key>
-				<array>
-				    <dict>
-				        <key>CFBundleURLSchemes</key>
-				        <array>
-				            <string>fb104171846376854</string>
-				        </array>
-				    </dict>
-				</array>
-			</scheme>
-	</gap:url-scheme>
+
 	<!-- Define app icon for each platform. -->
 	<icon src="resources/icons/Icon.png" />	
 	<!--
