@@ -8,7 +8,7 @@ Ext.define('smiley360.view.TermsOfUse', {
         hideOnMaskTap: true,
         id: 'xView',
         scrollable: 'vertical',
-        cls: 'popup-panel',
+        cls: 'popup-panel connect-popup-panel',
         items: [{
             xtype: 'panel',
             id: 'xRootPanel',
@@ -37,8 +37,9 @@ Ext.define('smiley360.view.TermsOfUse', {
             	layout: 'hbox',
             	items: [{
             		xtype: 'label',
+					id: 'xTermsLabel',
             		html: 'SMILEY360.COM TERMS OF SERVICE AGREEMENT',
-            		cls: 'heading-text active-sign',
+            		cls: 'heading-text-unsized active-sign',
             		style: 'padding-left: 15px;',
             		flex: 1
             	}],
@@ -47,8 +48,8 @@ Ext.define('smiley360.view.TermsOfUse', {
                 cls: 'popup-middle-panel',
                 items: [{
                 	xtype: 'container',
-                	style: '-webkit-overflow-scrolling: touch ; height: 100%; width: 100%; overflow-y: auto; overflow-x: hidden;',
-                	html: '<iframe frameborder="0" scrolling="yes" style="margin-left: 17px;" src="resources/htmls/termsContent_mobile.html" class="popup-survey-iframe"></iframe>'
+                	style: '-webkit-overflow-scrolling: touch ; height: 80%; width: 100%; overflow-y: scroll; overflow-x: hidden; max-height:460px; ',
+                	html: '<iframe frameborder="0" scrolling="yes" src="resources/htmls/termsContent_mobile.html" class="popup-survey-iframe"></iframe>'
 					}],
             }, {
                 xtype: 'panel',
