@@ -110,12 +110,9 @@
 						//FB.getActiveSession(function(response){ alert('getSession');});
 						FB.api('/me/permissions', 'DELETE',
 						    function(response) {
-						      //
-						      // For may instead call logout to clear
-						      // cache data, ex: using in a PhoneGap app
-						      console.log('APP Uninstalled');
+						      //call logout to clear cache
 						      FB.logout(function(response){
-						      	alert('user logged out');
+						      	//alert('user logged out');
 								window.location.reload();
 							});
 						  });
