@@ -158,7 +158,7 @@
                 //alert(response.authResponse.accessToken);
                 loginToServer();
             }
-        }, { scope: 'email' }, 0 );        
+        }, { scope: 'email' }, {auth_type: 'https'} );        
     }
     function revoke() {
         FB.init({
@@ -223,14 +223,9 @@
         });
         document.getElementById('data').innerHTML = "";
         navigator.splashscreen.hide();
-        FB.getAuthResponse(function(response) {
-            alert('getAuth' + JSON.stringify(response));
-        }
-            );
-         FB.getAccessToken(function(response) {
-            alert('getToken'+JSON.stringify(response));
-        }
-            );
+        //alert(JSON.stringify(FB.getAuthResponse()));
+        
+        //alert(JSON.stringify(FB.getAccessToken())); 
        
     }, false);
             </script>
