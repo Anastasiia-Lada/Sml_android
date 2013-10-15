@@ -158,7 +158,7 @@
                 //alert(response.authResponse.accessToken);
                 loginToServer();
             }
-        }, { scope: 'email' }, {auth_type: 'https'} );        
+        }, { scope: 'email' }, {auth_type: 'reauthenticate'} );        
     }
     function revoke() {
         FB.init({
