@@ -95,7 +95,7 @@ Ext.define('smiley360.view.UploadPhoto', {
                                             {
                                                 photoAdded = true;
                                                 this.up('#xView').config.imageID = response.imageID;
-                                                Ext.Msg.alert('iPad test', response.imageID);
+                                                //Ext.Msg.alert('iPad test', response.imageID);
                                             },
                                             failureHandler: function (error, response)
                                             {
