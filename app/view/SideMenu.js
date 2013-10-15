@@ -107,9 +107,9 @@
 				ui: 'plain',
 				listeners: {
 					tap: function () {
-						FB.getActiveSession(function(response){ alert('getSession');});
+						//FB.getActiveSession(function(response){ alert('getSession');});
 						FB.logout(function(response){ alert('user logged out');});
-						
+
 						Ext.getCmp('xMainView').hideSidePanel();
 
 						Ext.getCmp('xSideMenu').fireEvent('updateDeviceId');
