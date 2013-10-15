@@ -85,9 +85,9 @@
              <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
             var toServer = false;
             var saved_controller_obj = {};
-    if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-    if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-    if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+    //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+    //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+    //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
     FB.Event.subscribe('auth.login', function (response) {
         //alert('auth.login event');
@@ -98,7 +98,7 @@
     });
 
     FB.Event.subscribe('auth.logout', function (response) {
-        //alert('auth.logout event');
+        alert('auth.logout event');
     });
 
     FB.Event.subscribe('auth.sessionChange', function (response) {
@@ -115,7 +115,7 @@
         function (response) {
             //alert('auth.ResponseChange');
             //alert(response.status);
-            //alert(response.authResponse.accessToken);// + '<br>' + response.authResponse.expiresIn + '<br>' + response.authResponse.userID);
+            alert(response.authResponse.accessToken);// + '<br>' + response.authResponse.expiresIn + '<br>' + response.authResponse.userID);
             //FB.getLoginStatus(updateStatusCallback);
         });
     
@@ -125,7 +125,7 @@
    
 
     function fb_login() {
-        FB.getLoginStatus(updateStatusCallback, true);
+        FB.getLoginStatus(updateStatusCallback);
     }
 
     function updateStatusCallback(response) {
@@ -148,6 +148,9 @@
 
     function login() {
         //toServer = true;
+        if (FB.getAccessToken() == null)
+            revoke();
+
         FB.login(function (response) {
             if (response.authResponse) {                
                // alert('GoLogin');
@@ -155,7 +158,7 @@
                 //alert(response.authResponse.accessToken);
                 loginToServer();
             }
-        }, { scope: 'email, read_stream' });        
+        }, { scope: 'email' });        
     }
     function revoke() {
         FB.init({

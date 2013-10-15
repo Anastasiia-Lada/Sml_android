@@ -119,6 +119,7 @@
     <Content Include="resources\css\level.css" />
     <Content Include="resources\css\rating.css" />
     <Content Include="resources\css\smiley.css" />
+    <Content Include="resources\htmls\termsContent_mobile.html" />
     <Content Include="resources\icons\Icon%402x.png" />
     <Content Include="resources\icons\icon-spot~ipad.png" />
     <Content Include="resources\icons\Icon.png" />

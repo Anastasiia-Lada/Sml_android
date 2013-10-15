@@ -34,10 +34,10 @@
 	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="ios" width="1024" height="748" />
 	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="ios" width="768" height="1004" />
 
-	<gap:splash src="resources/images/loadingimage-r2.png"  gap:platform="android" gap:density="ldpi" />
-    	<gap:splash src="resources/images/loadingimage-r2.png"  gap:platform="android" gap:density="mdpi" />
-    	<gap:splash src="resources/images/loadingimage-r2.png"  gap:platform="android" gap:density="hdpi" />
-    	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="android" gap:density="xhdpi" />
+	<gap:splash src="resources/images/ldpi.png"  gap:platform="android" gap:density="ldpi" />
+    	<gap:splash src="resources/images/mdpi.png"  gap:platform="android" gap:density="mdpi" />
+    	<gap:splash src="resources/images/hdpi.png"  gap:platform="android" gap:density="hdpi" />
+    	<gap:splash src="resources/images/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
 
 <!-- retina iPad support: PhoneGap 2.5.0+ only -->

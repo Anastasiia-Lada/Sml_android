@@ -18,12 +18,7 @@ Ext.define('smiley360.view.Login', {
 		items: [{
 			xtype: 'image',
 			src: 'resources/images/logo.png',
-			cls: 'logo',
-			listeners: {
-				painted: function () {
-					this.select();
-				}
-			},
+			cls: 'logo'
 		}, {
 			xtype: 'spacer',
 			height: '14px'
