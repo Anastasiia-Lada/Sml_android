@@ -152,7 +152,7 @@
         //    revoke();
 
         FB.login(function (response) {
-            if (!response.error) {                
+            if (response.authResponse) {                
                // alert('GoLogin');
                 //toServer = false;
                 //alert(response.authResponse.accessToken);
