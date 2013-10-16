@@ -131,17 +131,17 @@
     function updateStatusCallback(response) {
         if (response.status === 'connected') {
             
-            //alert('You are already connected to Facebook!');
+            alert('You are already connected to Facebook!');
             revoke();
             //loginToServer();
         }
         else if (response.status === 'not_authorized') {
-            //alert('You are not authorized on Facebook!');
+            alert('You are not authorized on Facebook!');
             // not_authorized
             login();
         } else {
             // not_logged_in
-            //alert('You are not logged in with Facebook! Please, log in!');
+            alert('You are not logged in with Facebook! Please, log in!');
 
             if (login_response == 'enabled')
             {
@@ -189,7 +189,7 @@
     }
     function revoke() {
         FB.init({
-            appId: "213563938819286",
+            appId: "104171846376854",
             nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
@@ -240,7 +240,7 @@
 
     document.addEventListener('deviceready', function () {
         FB.init({
-            appId: "213563938819286",
+            appId: "104171846376854",
             nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
