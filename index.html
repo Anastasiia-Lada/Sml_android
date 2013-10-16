@@ -175,10 +175,10 @@
     function revoke() {
         FB.init({
             appId: "213563938819286",
-            //nativeInterface: CDV.FB,
+            nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
-            cookie: true,           // enable cookies to allow the server to access the session
+            cookie: false,           // enable cookies to allow the server to access the session
             oauth: true,            // enable OAuth 2.0
             xfbml: false,
         });
@@ -226,10 +226,10 @@
     document.addEventListener('deviceready', function () {
         FB.init({
             appId: "213563938819286",
-            //nativeInterface: CDV.FB,
+            nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
-            cookie: true,           // enable cookies to allow the server to access the session
+            cookie: false,           // enable cookies to allow the server to access the session
             oauth: true,            // enable OAuth 2.0
             xfbml: false,
         });
