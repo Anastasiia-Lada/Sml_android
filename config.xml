@@ -45,8 +45,8 @@
 	<gap:splash src="resources/images/loadingimage-r2.png" gap:platform="ios" width="1536" height="2008" />
 
 	<gap:plugin name="com.phonegap.plugins.facebookconnect">
-    		<param name="APP_ID" value="104171846376854" />
-    		<param name="APP_NAME" value="Smiley360 Staging" />
+    		<param name="APP_ID" value="213563938819286" />
+    		<param name="APP_NAME" value="SmileyTestInt" />
 	</gap:plugin>
 
 	<!-- Define app icon for each platform. -->
