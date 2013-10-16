@@ -143,34 +143,19 @@
             // not_logged_in
             alert('You are not logged in with Facebook! Please, log in!');
 
-            if (login_response == 'enabled')
-            {
-                FB.api('/me/permissions', 'DELETE',
-                                function(response) {
-                                  //call logout to clear cache
-                                  FB.logout(function(response){
-                                    alert('user logged out on error');
-                                    window.location.reload();
-                                });
-                              });
-            }
-            else
+            
                 login();
-            }
         }
     }
 
-    var login_response = 'not_enabled'; 
     function login() {
         //toServer = true;
         //if (FB.getAccessToken() == null)
         //    revoke();
-        login_response = 'enabled';
         FB.login(function (response) {
             if (response.authResponse) {                
                // alert('GoLogin');
                 //toServer = false;
-                login_response = 'connected';
                 //if(response.authResponse.error)
                 //    alert(response.authResponse.error);
                 loginToServer();
