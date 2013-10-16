@@ -152,11 +152,21 @@
         //    revoke();
 
         FB.login(function (response) {
-            if (response.authResponse) {                
+            if (!response.error) {                
                // alert('GoLogin');
                 //toServer = false;
                 //alert(response.authResponse.accessToken);
                 loginToServer();
+            }
+            else {
+                FB.api('/me/permissions', 'DELETE',
+                            function(response) {
+                              //call logout to clear cache
+                              FB.logout(function(response){
+                                alert('user logged out on error');
+                                window.location.reload();
+                            });
+                          });
             }
         }, { scope: 'email' }, {auth_type: 'reauthenticate'} );        
     }
