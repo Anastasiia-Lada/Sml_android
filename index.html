@@ -131,17 +131,17 @@
     function updateStatusCallback(response) {
         if (response.status === 'connected') {
             
-            alert('You are already connected to Facebook!');
+            //alert('You are already connected to Facebook!');
             revoke();
             //loginToServer();
         }
         else if (response.status === 'not_authorized') {
-            alert('You are not authorized on Facebook!');
+            //alert('You are not authorized on Facebook!');
             // not_authorized
             login();
         } else {
             // not_logged_in
-            alert('You are not logged in with Facebook! Please, log in!');
+            //alert('You are not logged in with Facebook! Please, log in!');
 
             
                 login();
@@ -178,7 +178,7 @@
             nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
-            cookie: false,           // enable cookies to allow the server to access the session
+            cookie: true,           // enable cookies to allow the server to access the session
             oauth: true,            // enable OAuth 2.0
             xfbml: false,
         });
@@ -229,7 +229,7 @@
             nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
-            cookie: false,           // enable cookies to allow the server to access the session
+            cookie: true,           // enable cookies to allow the server to access the session
             oauth: true,            // enable OAuth 2.0
             xfbml: false,
         });
