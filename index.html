@@ -146,10 +146,12 @@
         } else {
             // not_logged_in
             alert('You are not logged in with Facebook! Please, log in!');
-            FB.api('me/' function(returnData) { 
-                if (returnData.id) 
-                    alert(returnData.id)
-                else login(); 
+            FB.getAuthResponse( function(response) { alert('rs' + JSON.stringify(response)); 
+            FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke) {
+                        Ext.Msg.alert('revoked on login');
+                        login();
+                    });
+            });
             //FB.api({ method: 'Auth.createToken' }, function(revoke_response) {
               //          Ext.Msg.alert('token created');
                 //        alert(revoke_response);
@@ -162,7 +164,7 @@
             
             //FB.getSession( function(resp) { 
             //    alert('session is' + JSON.stringify(resp));
-            });
+            
             
         }
     }
