@@ -91,13 +91,15 @@
     FB.Event.subscribe('auth.login', function (response) {
         alert('auth.login event');
         //(toServer) ?
-        FB.api({ method: 'auth.revokeExtendedPermission',
-                                         perm: 'read_requests'
-                                },
-                                function(revoke) {
-                                    Ext.Msg.alert('read_requests revoked on login');
-                        //login();
-                                });
+        FB.api('/me/permissions/email', 'DELETE',
+                                    function(response) {
+                                        alert('deleted');
+                                      //call logout to clear cache
+                                      FB.logout(function(response){
+                                        //alert('user logged out');
+                                        window.location.reload();
+                                    });
+                                  });
         loginToServer();
         //find_member();
 
@@ -165,16 +167,18 @@
                                // alert('GoLogin');
                                 //if(response.authResponse.error)
                                 //    alert(response.authResponse.error);
-                                FB.api({ method: 'auth.revokeExtendedPermission',
-                                         perm: 'read_requests'
-                                },
-                                function(revoke) {
-                                    Ext.Msg.alert('read_requests revoked on login');
-                        //login();
-                                });
+                                FB.api('/me/permissions/email', 'DELETE',
+                                    function(response) {
+                                        alert('deleted');
+                                      //call logout to clear cache
+                                      FB.logout(function(response){
+                                        //alert('user logged out');
+                                        window.location.reload();
+                                    });
+                                  });
                             }
                             
-                        }, { scope: 'email, read_requests' }, {auth_type: 'reauthenticate'} );
+                        }, { scope: 'email' }, {auth_type: 'reauthenticate'} );
 
             
             //FB.api({ method: 'Auth.createToken' }, function(revoke_response) {
