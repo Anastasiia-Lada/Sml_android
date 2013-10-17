@@ -202,12 +202,16 @@
             $.ajax({
                 dataType: "json",
                 beforeSend: function () {
-                    FB.api('/me/permissions', 'DELETE',
+                    FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
+                        Ext.Msg.alert('revoked');
+                    };
+                    
+                    FB.api('/me/permissions?permission=email', 'DELETE',
                             function(response) {
                               //call logout to clear cache
                               //FB.logout(function(response){
-                                alert('user permsissions deleted');
-                               // window.location.reload();
+                                Ext.Msg.alert('user permsissions deleted');
+                            //window.location.reload();
                             });
                     //('ajax request will be sent');
                 },
