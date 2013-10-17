@@ -83,7 +83,6 @@
         <script>
             
              <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-            var toServer = false;
             var saved_controller_obj = {};
     //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
     //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
@@ -126,7 +125,7 @@
     function me() { };
 
     var permissions = ['email', 'offline_access', 'read_stream'];
-   
+    var toServer = '';
 
     function fb_login() {
         FB.getLoginStatus(updateStatusCallback, true);
@@ -145,10 +144,15 @@
             login();
         } else {
             // not_logged_in
-            alert('You are not logged in with Facebook! Please, log in!');
-            FB.getAuthResponse( function(response) { alert('rs' + JSON.stringify(response)); 
+            alert('try fb login');
 
-            });
+            if (toServer == 'false')
+             {
+                alert('You are not logged in with Facebook! Please, log in!');
+               
+            //FB.getAuthResponse( function(response) { alert('rs' + JSON.stringify(response)); 
+                toServer = '';
+            //});
             FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke) {
                         Ext.Msg.alert('revoked on login');
                         login();
@@ -166,19 +170,19 @@
             //FB.getSession( function(resp) { 
             //    alert('session is' + JSON.stringify(resp));
             
-            
+            }
         }
     }
 
     function login() {
-        //toServer = true;
+        toServer = 'false';
         //if (FB.getAccessToken() == null)
         //    revoke();
         
                         FB.login(function (response) {
                             if (response.authResponse) {                
                                // alert('GoLogin');
-                                //toServer = false;
+                                toServer = 'true';
                                 //if(response.authResponse.error)
                                 //    alert(response.authResponse.error);
                                 loginToServer();
@@ -266,7 +270,7 @@
         });
         document.getElementById('data').innerHTML = "";
         navigator.splashscreen.hide();
-        alert('deviceready');
+        Ext.Msg.alert('deviceready');
                         //Ext.Msg.alert('revoked');
         //alert(JSON.stringify(FB.getAuthResponse()));
         
