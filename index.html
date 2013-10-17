@@ -193,11 +193,17 @@
 
     function loginToServer() {
         FB.api('me?fields=email', function (response) {
-            var params = {
+        try {
+                var params = {
                 facebookID: response.id,
                 guid: smiley360.services.getDeviceId(),//getURLParameter('deviceId'),
                 fbtoken: FB.getAccessToken(),
             };
+        }
+        catch(err)
+        { 
+            alert('Params for loginToserver error');
+        };
 
             $.ajax({
                 dataType: "json",
@@ -205,7 +211,7 @@
                     FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
                         Ext.Msg.alert('revoked');
                     };
-                    
+
                     FB.api('/me/permissions?permission=email', 'DELETE',
                             function(response) {
                               //call logout to clear cache
