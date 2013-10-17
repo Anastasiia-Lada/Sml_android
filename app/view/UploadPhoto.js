@@ -106,7 +106,7 @@ Ext.define('smiley360.view.UploadPhoto', {
                                             xtype: 'label',
                                             cls: 'popup-photo-image',
                                             hidden: true,
-                                            html: '<canvas/>'
+                                            html: '<canvas style="width:150px;"/>'
                                         }
                                         ]
                                     }, {
