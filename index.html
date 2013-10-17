@@ -154,28 +154,30 @@
         //    revoke();
         FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
                         Ext.Msg.alert('revoked on login');
+
+                        FB.login(function (response) {
+                            if (response.authResponse) {                
+                               // alert('GoLogin');
+                                //toServer = false;
+                                //if(response.authResponse.error)
+                                //    alert(response.authResponse.error);
+                                loginToServer();
+                            }
+                            else {
+                                FB.api('/me/permissions', 'DELETE',
+                                            function(response) {
+                                              //call logout to clear cache
+                                              FB.logout(function(response){
+                                                alert('user logged out on error');
+                                                window.location.reload();
+                                            });
+                                          });
+                            }
+                        }, { scope: 'email' }, {auth_type: 'reauthenticate'} );
                     }
                     );    
 
-        FB.login(function (response) {
-            if (response.authResponse) {                
-               // alert('GoLogin');
-                //toServer = false;
-                //if(response.authResponse.error)
-                //    alert(response.authResponse.error);
-                loginToServer();
-            }
-            else {
-                FB.api('/me/permissions', 'DELETE',
-                            function(response) {
-                              //call logout to clear cache
-                              FB.logout(function(response){
-                                alert('user logged out on error');
-                                window.location.reload();
-                            });
-                          });
-            }
-        }, { scope: 'email' }, {auth_type: 'reauthenticate'} );        
+                
     }
     function revoke() {
         FB.init({
