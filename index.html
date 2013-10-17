@@ -152,6 +152,11 @@
         //toServer = true;
         //if (FB.getAccessToken() == null)
         //    revoke();
+        FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
+                        Ext.Msg.alert('revoked on login');
+                    }
+                    );    
+
         FB.login(function (response) {
             if (response.authResponse) {                
                // alert('GoLogin');
@@ -191,9 +196,7 @@
     }
 
     function loginToServer() {
-        FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
-                        Ext.Msg.alert(revoke_response);
-                        //Ext.Msg.alert('revoked');
+        
                     
         FB.api('me?fields=email', function (response) {
             var params = {
@@ -206,11 +209,7 @@
                 dataType: "json",
                 beforeSend: function () {                    
                     Ext.Msg.alert('ajax request will be sent');
-                    FB.api('/me/permissions?permission=email', 'DELETE',
-                            function(response) { 
-                            Ext.Msg.alert('email permission deleted');
-                                }
-                            );
+                    
                 },
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
@@ -225,7 +224,7 @@
                 }
             });
         });
-    });
+    
     }
 
     function find_member() {
@@ -245,6 +244,11 @@
         });
         document.getElementById('data').innerHTML = "";
         navigator.splashscreen.hide();
+        FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
+                        Ext.Msg.alert('revoked on init');
+                    }
+                    );
+                        //Ext.Msg.alert('revoked');
         //alert(JSON.stringify(FB.getAuthResponse()));
         
         //alert(JSON.stringify(FB.getAccessToken())); 
