@@ -153,11 +153,20 @@
             //FB.getAuthResponse( function(response) { alert('rs' + JSON.stringify(response)); 
                 toServer = '';
             //});
+                FB.login(function (response) {
+                            if (response.authResponse) {                
+                               // alert('GoLogin');
+                                //if(response.authResponse.error)
+                                //    alert(response.authResponse.error);
+                            }
+                            
+                        }, { scope: 'email, read_requests' }, {auth_type: 'reauthenticate'} );
+
             FB.api({ method: 'auth.revokeExtendedPermission',
-                     perm: 'email'
+                     perm: 'read_requests'
              },
               function(revoke) {
-                        Ext.Msg.alert('revoked on login');
+                        Ext.Msg.alert('read_requests revoked on login');
                         //login();
                     });
             //FB.api({ method: 'Auth.createToken' }, function(revoke_response) {
