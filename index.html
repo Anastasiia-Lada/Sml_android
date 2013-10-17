@@ -121,7 +121,7 @@
     
     function me() { };
 
-    var permissions = ['email', 'offline_access', 'read_stream'];
+    var permissions = 'email, user_birthday, read_stream';
     var toServer = '';
 
     function fb_login() {
@@ -130,16 +130,16 @@
 
     function updateStatusCallback(response) {
         if (response.status === 'connected') {
-            login();
+            login(permissions);
         }
         else if (response.status === 'not_authorized') {
-            login();
+            login(permissions);
         } else {
-            login();
+            login(permissions);
         }
     }
 
-    function login() {
+    function login(sc) {
         
                         FB.login(function (response) {
                             if (response.authResponse) {  
@@ -156,7 +156,7 @@
                                             });
                                           });
                             }
-                        }, { scope: 'email, user_birthday, read_stream' });
+                        }, { scope: sc });
     }
 
     function revoke() {
