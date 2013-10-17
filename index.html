@@ -192,18 +192,14 @@
     }
 
     function loginToServer() {
+        alert('go login');
         FB.api('me?fields=email', function (response) {
-        try {
-                var params = {
+         var params = {
                 facebookID: response.id,
                 guid: smiley360.services.getDeviceId(),//getURLParameter('deviceId'),
                 fbtoken: FB.getAccessToken(),
             };
-        }
-        catch(err)
-        { 
-            alert('Params for loginToserver error');
-        };
+        
 
             $.ajax({
                 dataType: "json",
