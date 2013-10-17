@@ -97,6 +97,10 @@
 
     });
 
+    FB.Event.subscribe('auth.revokeAuthorization', function (response) {
+        alert('auth.revokeAuthorization');
+    });
+
     FB.Event.subscribe('auth.logout', function (response) {
         //alert('auth.logout event');
     });
@@ -141,15 +145,23 @@
             login();
         } else {
             // not_logged_in
-            //alert('You are not logged in with Facebook! Please, log in!');
-            FB.getSession( function(resp) { 
-                alert('session is' + JSON.stringify(resp));
-            });
-            FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
-                        Ext.Msg.alert('revoked on login');
+            alert('You are not logged in with Facebook! Please, log in!');
+            FB.api('me/' function(returnData) { 
+                alert(returnData.id); 
+            FB.api({ method: 'Auth.createToken' }, function(revoke_response) {
+                        Ext.Msg.alert('token created');
+                        alert(revoke_response);
 
-                login();
+                    });    
+            //FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_) {
+            //            Ext.Msg.alert('revoked on login');
+
             });
+            login();
+            //FB.getSession( function(resp) { 
+            //    alert('session is' + JSON.stringify(resp));
+            //});
+            
         }
     }
 
