@@ -153,7 +153,10 @@
             //FB.getAuthResponse( function(response) { alert('rs' + JSON.stringify(response)); 
                 toServer = '';
             //});
-            FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke) {
+            FB.api({ method: 'auth.revokeExtendedPermission',
+                     perm: 'email'
+             },
+              function(revoke) {
                         Ext.Msg.alert('revoked on login');
                         //login();
                     });
