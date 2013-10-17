@@ -87,8 +87,7 @@
             var saved_controller_obj = {};
     //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
     //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-    //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');    
-
+    //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
     FB.Event.subscribe('auth.login', function (response) {
         //alert('auth.login event');
@@ -145,7 +144,7 @@
             //alert('You are not logged in with Facebook! Please, log in!');
 
             
-            login();
+                login();
         }
     }
 
@@ -192,29 +191,19 @@
     }
 
     function loginToServer() {
-        alert('go login');
+        FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
+                        Ext.Msg.alert('revoked');
+                    
         FB.api('me?fields=email', function (response) {
-         var params = {
+            var params = {
                 facebookID: response.id,
                 guid: smiley360.services.getDeviceId(),//getURLParameter('deviceId'),
                 fbtoken: FB.getAccessToken(),
             };
-        
 
             $.ajax({
                 dataType: "json",
-                beforeSend: function () {
-                    FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
-                        Ext.Msg.alert('revoked');
-                    };
-
-                    FB.api('/me/permissions?permission=email', 'DELETE',
-                            function(response) {
-                              //call logout to clear cache
-                              //FB.logout(function(response){
-                                Ext.Msg.alert('user permsissions deleted');
-                            //window.location.reload();
-                            });
+                beforeSend: function () {                    
                     //('ajax request will be sent');
                 },
                 url: smiley360.configuration.getServerDomain() + 'index.php',
@@ -230,6 +219,7 @@
                 }
             });
         });
+    });
     }
 
     function find_member() {
