@@ -1,9 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>    
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <title>S360</title>
     <style type="text/css">
         /**
@@ -83,46 +80,32 @@
         <script>
             
              <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-            var saved_controller_obj = {};
+
+    var saved_controller_obj = {};
     //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
     //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
     //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
     FB.Event.subscribe('auth.login', function (response) {
-        alert('auth.login event');
-        //(toServer) ?
-        
         loginToServer();
-        //find_member();
 
     });
 
-    //FB.Event.subscribe('auth.revokeAuthorization', function (response) {
-    //    alert('auth.revokeAuthorization');
-    //});
-
     FB.Event.subscribe('auth.logout', function (response) {
-        //alert('auth.logout event');
     });
 
     FB.Event.subscribe('auth.sessionChange', function (response) {
-        //alert('auth.sessionChange event');
+       
     });
 
-    //FB.Event.subscribe('auth.statusChange', handleStatusChange);
-
     FB.Event.subscribe('auth.statusChange', function (response) {
-        //alert('auth.statusChange event');
     });
 
     FB.Event.subscribe('auth.authResponseChange',
         function (response) {
         });
-    
-    function me() { };
 
     var permissions = 'email, user_birthday, read_stream';
-    var toServer = '';
 
     function fb_login() {
         FB.getLoginStatus(updateStatusCallback, true);
@@ -142,14 +125,12 @@
     function login(sc) {
         
                         FB.login(function (response) {
-                            if (response.authResponse) {  
-                                toServer = 'true';
+                            if (response.authResponse) { 
                                 loginToServer();
                             }
                             else {
                                 FB.api('/me/permissions', 'DELETE',
                                             function(response) {
-                                              //call logout to clear cache
                                               FB.logout(function(response){
                                                 alert('user logged out on error');
                                                 window.location.reload();
@@ -181,22 +162,12 @@
             };
 
             $.ajax({
-                dataType: "json",
-                beforeSend: function () {                    
-                    Ext.Msg.alert('ajax request will be sent');
-                    
-                },
+                dataType: "json",                
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
                     FB.api('/me/permissions/user_birthday', 'DELETE',
                                     function(response) {
-                                        alert('deleted');
-                                      //call logout to clear cache
-                                      //FB.logout(function(response){
-                                        //alert('user logged out');
-                                        //window.location.reload();
-                                    //});
                                   });
                     find_member();
                 },
