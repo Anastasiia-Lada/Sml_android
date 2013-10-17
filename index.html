@@ -91,15 +91,7 @@
     FB.Event.subscribe('auth.login', function (response) {
         alert('auth.login event');
         //(toServer) ?
-        FB.api('/me/permissions/email', 'DELETE',
-                                    function(response) {
-                                        alert('deleted');
-                                      //call logout to clear cache
-                                      FB.logout(function(response){
-                                        //alert('user logged out');
-                                        window.location.reload();
-                                    });
-                                  });
+        
         loginToServer();
         //find_member();
 
@@ -125,10 +117,6 @@
 
     FB.Event.subscribe('auth.authResponseChange',
         function (response) {
-            //alert('auth.ResponseChange');
-            //alert(response.status);
-            //alert(response.authResponse.accessToken);// + '<br>' + response.authResponse.expiresIn + '<br>' + response.authResponse.userID);
-            //FB.getLoginStatus(updateStatusCallback);
         });
     
     function me() { };
@@ -142,74 +130,20 @@
 
     function updateStatusCallback(response) {
         if (response.status === 'connected') {
-            
-            //alert('You are already connected to Facebook!');
-            revoke();
-            //loginToServer();
+            login();
         }
         else if (response.status === 'not_authorized') {
-            //alert('You are not authorized on Facebook!');
-            // not_authorized
             login();
         } else {
-            // not_logged_in
-            alert('try fb login');
-
-            if (toServer == 'false')
-             {
-                alert('You are not logged in with Facebook! Please, log in!');
-               
-            //FB.getAuthResponse( function(response) { alert('rs' + JSON.stringify(response)); 
-                toServer = '';
-            //});
-                FB.login(function (response) {
-                            if (response.authResponse) {                
-                               // alert('GoLogin');
-                                //if(response.authResponse.error)
-                                //    alert(response.authResponse.error);
-                                FB.api('/me/permissions/email', 'DELETE',
-                                    function(response) {
-                                        alert('deleted');
-                                      //call logout to clear cache
-                                      FB.logout(function(response){
-                                        //alert('user logged out');
-                                        window.location.reload();
-                                    });
-                                  });
-                            }
-                            
-                        }, { scope: 'email' }, {auth_type: 'reauthenticate'} );
-
-            
-            //FB.api({ method: 'Auth.createToken' }, function(revoke_response) {
-              //          Ext.Msg.alert('token created');
-                //        alert(revoke_response);
-
-                  // });    
-            //FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_) {
-            //            Ext.Msg.alert('revoked on login');
-
-            //});
-            
-            //FB.getSession( function(resp) { 
-            //    alert('session is' + JSON.stringify(resp));
-            
-            }
-            else login();
+            login();
         }
     }
 
     function login() {
-        toServer = 'false';
-        //if (FB.getAccessToken() == null)
-        //    revoke();
         
                         FB.login(function (response) {
-                            if (response.authResponse) {                
-                               // alert('GoLogin');
+                            if (response.authResponse) {  
                                 toServer = 'true';
-                                //if(response.authResponse.error)
-                                //    alert(response.authResponse.error);
                                 loginToServer();
                             }
                             else {
@@ -222,12 +156,9 @@
                                             });
                                           });
                             }
-                        }, { scope: 'email' }, {auth_type: 'reauthenticate'} );
-                    
-                        
-
-                
+                        }, { scope: 'email, user_birthday, read_stream' });
     }
+
     function revoke() {
         FB.init({
             appId: "213563938819286",
@@ -238,17 +169,10 @@
             oauth: true,            // enable OAuth 2.0
             xfbml: false,
         });
-        //FB.login(function (response) {
-        //    if (response.authResponse) {                
-        //        alert('Revoke');
-        //        alert(response.authResponse.accessToken);
-        //    }
-        //}, { scope: 'email, offline_access, read_stream, publish_stream' });
     }
 
     function loginToServer() {
-        
-                    
+
         FB.api('me?fields=email', function (response) {
             var params = {
                 facebookID: response.id,
@@ -265,10 +189,16 @@
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
-                    //go back to application
-                    //alert('loginToServer succeded');
+                    FB.api('/me/permissions/user_birthday', 'DELETE',
+                                    function(response) {
+                                        alert('deleted');
+                                      //call logout to clear cache
+                                      //FB.logout(function(response){
+                                        //alert('user logged out');
+                                        //window.location.reload();
+                                    //});
+                                  });
                     find_member();
-                    //window.history.go(-(window.history.length - 1));
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);//'ajax request failed');
@@ -279,7 +209,6 @@
     }
 
     function find_member() {
-        //var me = Ext.app.getController('ParentController');
         saved_controller_obj.tryLoginUser();
     }
 
@@ -295,12 +224,7 @@
         });
         document.getElementById('data').innerHTML = "";
         navigator.splashscreen.hide();
-        Ext.Msg.alert('deviceready');
-                        //Ext.Msg.alert('revoked');
-        //alert(JSON.stringify(FB.getAuthResponse()));
-        
-        //alert(JSON.stringify(FB.getAccessToken())); 
-       
+        //Ext.Msg.alert('deviceready');
     }, false);
             </script>
         <div id="log"></div>
