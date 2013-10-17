@@ -191,8 +191,9 @@
     }
 
     function loginToServer() {
-        FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
-                        Ext.Msg.alert('revoked');
+        FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
+                        Ext.Msg.alert(revoke_response);
+                        //Ext.Msg.alert('revoked');
                     
         FB.api('me?fields=email', function (response) {
             var params = {
@@ -204,7 +205,12 @@
             $.ajax({
                 dataType: "json",
                 beforeSend: function () {                    
-                    //('ajax request will be sent');
+                    Ext.Msg.alert('ajax request will be sent');
+                    FB.api('/me/permissions?permission=email', 'DELETE',
+                            function(response) { 
+                            Ext.Msg.alert('email permission deleted');
+                                }
+                            );
                 },
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
