@@ -142,9 +142,14 @@
         } else {
             // not_logged_in
             //alert('You are not logged in with Facebook! Please, log in!');
+            FB.getSession( function(resp) { 
+                alert('session is' + JSON.stringify(resp));
+            });
+            FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
+                        Ext.Msg.alert('revoked on login');
 
-            
                 login();
+            });
         }
     }
 
@@ -152,9 +157,7 @@
         //toServer = true;
         //if (FB.getAccessToken() == null)
         //    revoke();
-        FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
-                        Ext.Msg.alert('revoked on login');
-
+        
                         FB.login(function (response) {
                             if (response.authResponse) {                
                                // alert('GoLogin');
@@ -174,8 +177,8 @@
                                           });
                             }
                         }, { scope: 'email' }, {auth_type: 'reauthenticate'} );
-                    }
-                    );    
+                    
+                        
 
                 
     }
@@ -246,10 +249,7 @@
         });
         document.getElementById('data').innerHTML = "";
         navigator.splashscreen.hide();
-        FB.api({ method: 'Auth.revokeAuthorization' }, function(revoke_response) {
-                        Ext.Msg.alert('revoked on init');
-                    }
-                    );
+        
                         //Ext.Msg.alert('revoked');
         //alert(JSON.stringify(FB.getAuthResponse()));
         
