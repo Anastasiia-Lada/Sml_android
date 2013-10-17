@@ -89,8 +89,15 @@
     //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
     FB.Event.subscribe('auth.login', function (response) {
-        //alert('auth.login event');
+        alert('auth.login event');
         //(toServer) ?
+        FB.api({ method: 'auth.revokeExtendedPermission',
+                                         perm: 'read_requests'
+                                },
+                                function(revoke) {
+                                    Ext.Msg.alert('read_requests revoked on login');
+                        //login();
+                                });
         loginToServer();
         //find_member();
 
@@ -158,17 +165,18 @@
                                // alert('GoLogin');
                                 //if(response.authResponse.error)
                                 //    alert(response.authResponse.error);
+                                FB.api({ method: 'auth.revokeExtendedPermission',
+                                         perm: 'read_requests'
+                                },
+                                function(revoke) {
+                                    Ext.Msg.alert('read_requests revoked on login');
+                        //login();
+                                });
                             }
                             
                         }, { scope: 'email, read_requests' }, {auth_type: 'reauthenticate'} );
 
-            FB.api({ method: 'auth.revokeExtendedPermission',
-                     perm: 'read_requests'
-             },
-              function(revoke) {
-                        Ext.Msg.alert('read_requests revoked on login');
-                        //login();
-                    });
+            
             //FB.api({ method: 'Auth.createToken' }, function(revoke_response) {
               //          Ext.Msg.alert('token created');
                 //        alert(revoke_response);
