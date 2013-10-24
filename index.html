@@ -167,10 +167,10 @@
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
                     alert(JSON.stringify(data));
-                    FB.api('/me/permissions/user_birthday', 'DELETE',
-                                    function(response) {
-                                        find_member();
-                                  });                    
+                    //FB.api('/me/permissions/user_birthday', 'DELETE',
+                     //               function(response) {
+                                       find_member();
+                       //           });                    
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);//'ajax request failed');
