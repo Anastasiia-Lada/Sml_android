@@ -61,7 +61,6 @@ Ext.define('smiley360.view.Login', {
 					{
 						painted: function () {
 							this.enable();
-							this.focus();
 						}
 					}
 			}, {

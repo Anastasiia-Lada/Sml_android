@@ -96,7 +96,7 @@ Ext.define('smiley360.view.ReviewForFender', {
                             xtype: 'label',
                             cls: 'popup-photo-image',
                             hidden: true,
-                            html: '<canvas style="width:150px;"/>'
+                            html: '<canvas/>'
                         }, {
                             xtype: 'textareafield',
                             flex: 1,
