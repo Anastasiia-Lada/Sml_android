@@ -107,16 +107,6 @@
 				ui: 'plain',
 				listeners: {
 					tap: function () {
-						//FB.getActiveSession(function(response){ alert('getSession');});
-						FB.api('/me/permissions', 'DELETE',
-						    function(response) {
-						      //call logout to clear cache
-						      FB.logout(function(response){
-						      	//alert('user logged out');
-								window.location.reload();
-							});
-						  });
-
 
 						Ext.getCmp('xMainView').hideSidePanel();
 

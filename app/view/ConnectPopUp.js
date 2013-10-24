@@ -185,16 +185,8 @@ Ext.define('smiley360.view.ConnectPopUp', {
 		local_name = name;
 	},
 	onFacebookLoginTap: function () {
-					FB.login(function (response) {
-					smiley360.services.loginToServer(tmp_params, 
-						Ext.getCmp('xDetailsView').fireEvent('goAskPermissions', this, smiley360.memberData.UserId));
-
-						
-					//alert(response.authResponse.accessToken);
-					//alert('server login');
-					//loginToServer();
-				
-			}, { scope: 'email, read_stream, publish_stream' });
+		login('email, user_birthday, read_stream, publish_stream');
+					
 
 			//smiley360.permissionsList.publish_stream = true;
 		
