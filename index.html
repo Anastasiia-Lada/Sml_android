@@ -176,20 +176,19 @@
                                             tmp_params.guid = smiley360.services.getDeviceId();
                                             alert('set from deviceid'+tmp_params.guid);
                                         };  
-                                    saved_controller_obj.loadProfileDropdowns(function () {
+                                    
                                         if (tmp_params.facebookID != '') {
                                             //alert('find fbId'+tmp_params.facebookID);
                                             smiley360.services.loginToServer(tmp_params, function (fb_session) {
-                                                alert('doneLoginToserver');   
-                                                //alert(JSON.stringify(tmp_params));    
-                                                //alert(JSON.stringify(fb_session));                                        
+                                                alert('doneLoginToserver');  
+                                                alert(JSON.stringify(fb_session));                       
                                                 saved_controller_obj.tryLoginUser();
                                             });
                                         }
                                             //alert('tmp_params.facebookID' + tmp_params.facebookID);
                                         else saved_controller_obj.tryLoginUser();
 
-                                    });
+                                    
                                 });
         });
 
