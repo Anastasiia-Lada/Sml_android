@@ -87,7 +87,7 @@
     //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
     FB.Event.subscribe('auth.login', function (response) {
-        //loginToServer();
+        loginToServer();
 
     });
 
@@ -166,12 +166,11 @@
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
-                	alert(JSON.stringify(params));
                     alert(JSON.stringify(data));
-                    //FB.api('/me/permissions/user_birthday', 'DELETE',
-                     //               function(response) {
-                                       find_member();
-                       //           });                    
+                    FB.api('/me/permissions/user_birthday', 'DELETE',
+                                    function(response) {
+                                        find_member();
+                                  });                    
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);//'ajax request failed');
