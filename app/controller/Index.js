@@ -1060,7 +1060,7 @@ Ext.define('smiley360.controller.Index', {
 
 				smiley360.services.getMemberIdByDeviceId(deviceId,
 					function (response) {
-						alert('trygetMemberId');
+						alert('trygetMemberId'+JSON.stringify(response));
 						if (response.success) {
 							alert('Index -> [tryLoginUser] with received memberId:' + response.ID);
 
