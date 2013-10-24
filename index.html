@@ -94,7 +94,6 @@
 
     FB.Event.subscribe('auth.login', function (response) {
         alert('FB login');
-        loginToServer();
 
     });
 
@@ -133,7 +132,7 @@
         
                         FB.login(function (response) {
                             if (response.authResponse) { 
-                                //loginToServer();
+                                loginToServer();
                             }
                             else {
                                 FB.api('/me/permissions', 'DELETE',
