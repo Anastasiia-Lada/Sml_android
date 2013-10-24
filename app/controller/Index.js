@@ -1013,7 +1013,7 @@ Ext.define('smiley360.controller.Index', {
 		console.log('Index -> updateDeviceId: ' + smiley360.services.getDeviceId());
 	},
 	tryLoginUser: function () {
-		//alert('Start try login user');
+		alert('Start try login user');
 		var me = saved_controller_obj;//Ext.app.getController('ParentController');
 
 		var membersStore = smiley360.services.getMemberStore();//Ext.getStore('membersStore');
@@ -1056,12 +1056,12 @@ Ext.define('smiley360.controller.Index', {
 			else if (deviceId) {
 				var me = this;
 
-				//alert('Index -> [tryLoginUser] with cached deviceId:' + deviceId);
+				alert('Index -> [tryLoginUser] with cached deviceId:' + deviceId);
 
 				smiley360.services.getMemberIdByDeviceId(deviceId,
 					function (response) {
 						if (response.success) {
-							console.log('Index -> [tryLoginUser] with received memberId:' + response.ID);
+							alert('Index -> [tryLoginUser] with received memberId:' + response.ID);
 
 							me.updateMemberId(response.ID);
 							me.loadMemberData(response.ID, function () {
@@ -1071,7 +1071,7 @@ Ext.define('smiley360.controller.Index', {
 									FB.api('/me/permissions/user_birthday', 'DELETE',
                                     function(response) {
                                   });
-								
+
 								isLoadedApp = true;
 								var cmp_tool = me.getToolId();
 								if (cmp_tool == 'sharetofacebookview') {
