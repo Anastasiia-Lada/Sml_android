@@ -43,6 +43,18 @@ smiley360.services.recoverPassword = function (email, onCompleted) {
 	});
 }
 
+smiley360.services.loginToServer = function (postData, onCompleted) {
+	//alert('login to server');
+	smiley360.services.ajax(
+        "facebookSignIn",
+        {
+        	facebookID: postData.facebookID,
+        	guid: postData.guid,
+        	fbtoken: postData.fbtoken
+        },
+        onCompleted);
+}
+
 smiley360.services.sendMessage = function (messageData, onCompleted) {
 	smiley360.services.ajax(
         "logComment",

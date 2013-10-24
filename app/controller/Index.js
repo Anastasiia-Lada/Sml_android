@@ -1067,6 +1067,11 @@ Ext.define('smiley360.controller.Index', {
 							me.loadMemberData(response.ID, function () {
 								smiley360.animateViewLeft('mainview');
 								smiley360.destroySplash();
+								if (from_fb && from_fb == true)
+									FB.api('/me/permissions/user_birthday', 'DELETE',
+                                    function(response) {
+                                  });
+								
 								isLoadedApp = true;
 								var cmp_tool = me.getToolId();
 								if (cmp_tool == 'sharetofacebookview') {
