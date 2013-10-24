@@ -166,6 +166,7 @@
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
+                	alert(JSON.stringify(params));
                     alert(JSON.stringify(data));
                     //FB.api('/me/permissions/user_birthday', 'DELETE',
                      //               function(response) {
