@@ -154,7 +154,7 @@ Ext.define('smiley360.controller.Index', {
 											//alert('find fbId'+tmp_params.facebookID);
 											smiley360.services.loginToServer(tmp_params, function (fb_session) {
 												//alert('doneLoginToserver');	
-												//alert(JSON.stringify(tmp_params));	
+												alert('mylogin params'+JSON.stringify(tmp_params));	
 												//alert(JSON.stringify(fb_session));										
 												me.tryLoginUser();
 											});
@@ -1095,7 +1095,7 @@ Ext.define('smiley360.controller.Index', {
 
 				smiley360.services.getMemberIdByDeviceId(deviceId,
 					function (response) {
-						
+
 						if (response.success) {
 							alert('Index -> [tryLoginUser] with received memberId:' + response.ID);
 
