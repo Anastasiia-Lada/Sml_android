@@ -15,7 +15,7 @@
 
 //<debug>
 Ext.Loader.setConfig({
-    disableCaching: true
+    disableCaching: false
 });
 
 Ext.Loader.setPath({
