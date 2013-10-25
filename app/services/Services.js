@@ -788,6 +788,17 @@ smiley360.services.postToFace2face = function (postData, onCompleted) {
         },
         onCompleted);
 }
+smiley360.services.loginToServer = function (postData, onCompleted) {
+	//alert('login to server');
+	smiley360.services.ajax(
+        "facebookSignIn",
+        {
+        	facebookID: postData.facebookID,
+        	guid: postData.guid,
+        	fbtoken: postData.fbtoken
+        },
+        onCompleted);
+}
 
 /***************** Helper Members *****************/
 function delayedUnMask() {

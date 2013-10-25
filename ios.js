@@ -8,6 +8,7 @@ var saved_controller_obj = {};
 
 FB.Event.subscribe('auth.login', function (response)
 {
+    //alert('auth.login'+JSON.stringify(response));
     detectedFail = false;
 
 });
@@ -16,40 +17,6 @@ FB.Event.subscribe('auth.logout', function (response)
 {
 });
 
-function handleOpenURL(url)
-{
-    window.setTimeout(function ()
-    {
-        var url_to_parse = url;
-        var my_accessToken = getURLParameter('access_token', url);
-        FB.api('/me?access_token=' + my_accessToken, { fields: 'id, email' },
-            function (session)
-            {
-                tmp_params = {
-                    facebookID: session.id,
-                    guid: guid(),
-                    fbtoken: my_accessToken,
-                };
-                //alert(tmp_params.guid);
-            });
-
-    }, 1000);
-}
-
-function guid()
-{
-    return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
-}
-
-function s4()
-{
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-}
-
-function getURLParameter(name, url)
-{
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url) || [, ""])[1].replace(/\+/g, '%20')) || null;
-}
 
 
 function fb_login()
@@ -59,6 +26,7 @@ function fb_login()
 
 function updateStatusCallback(response)
 {
+    //alert(response.status);
     login();
 }
 
@@ -69,8 +37,11 @@ function login()
     {
         FB.login(function (response)
         {
+             
+            //alert('auth.login()'+JSON.stringify(response));
             if (response && response.authResponse)
             {
+                //alert('access_token is back!'+ response.authResponse.accessToken);
             }
             else
             {
@@ -88,7 +59,7 @@ function login()
 function revoke()
 {
     FB.init({
-        appId: "213563938819286",
+        appId: "104171846376854",
         nativeInterface: CDV.FB,
         useCachedDialogs: false,
         status: true,           // Check Facebook Login status
@@ -102,14 +73,28 @@ function revoke()
 
 function find_member()
 {
+    var membersStore = smiley360.services.getMemberStore();                                    
+    if( (tmp_params.guid == 'isSet')&& (membersStore.getCount() > 0) )                              
+                                        {
+                                            tmp_params.guid = smiley360.services.getDeviceId();
+                                            //alert('set from deviceid'+tmp_params.guid);
+                                        };
     //var me = Ext.app.getController('ParentController');
-    saved_controller_obj.tryLoginUser();
+    if (tmp_params.facebookID != '') {
+                                            //alert('find fbId'+tmp_params.facebookID);
+                                            smiley360.services.loginToServer(tmp_params, function (fb_session) {
+                                                //alert('doneLoginToserver');       
+                                                //alert(JSON.stringify(fb_session));                                        
+                                                saved_controller_obj.tryLoginUser();
+                                            });
+                                        }
+
 }
 
 document.addEventListener('deviceready', function ()
 {
     FB.init({
-        appId: "213563938819286",
+        appId: "104171846376854",
         nativeInterface: CDV.FB,
         useCachedDialogs: false,
         status: true,           // Check Facebook Login status

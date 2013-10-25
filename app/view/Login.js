@@ -1,153 +1,160 @@
 Ext.define('smiley360.view.Login', {
-	extend: 'Ext.form.Panel',
-	alias: 'widget.loginview',
-	requires: [
+    extend: 'Ext.form.Panel',
+    alias: 'widget.loginview',
+    requires: [
         'Ext.Img',
         'Ext.Label',
         'Ext.form.FieldSet',
         'Ext.form.Password',
         'Ext.field.Text',
 		'Ext.field.Email'
-	],
-	config: {
-		id: 'xLoginView',
-		cls: 'page-bg',
-		title: 'Login',
-		padding: '15px',
-		scrollable: 'none',
-		items: [{
-			xtype: 'image',
-			src: 'resources/images/logo.png',
-			cls: 'logo'
-		}, {
-			xtype: 'spacer',
-			height: '14px'
-		}, {
-			xtype: 'panel',
-			cls: 'login-box',
-			height: '254px',			
-			items: [{
-				xtype: 'emailfield',
-				placeHolder: 'Email',
-				itemId: 'txtUserName',
-				id: 'txtLogin',
-				name: 'txtUserName',
-				cls: 'cust-input cust-input-user',
-				clearIcon: false,
-				required: true,
-				autoCapitalize: false
-			}, {
-				xtype: 'passwordfield',
-				maxHeight: '20px',
-				placeHolder: '******',
-				id: 'txtPassword',
-				padding: '4px 0px;',
-				itemId: 'txtPassword',
-				name: 'txtPassword',
-				cls: 'cust-input cust-input-pwd',
-				clearIcon: false,
-				required: true,
-				autoCapitalize: false
-			}, {
-				xtype: 'spacer',
-				height: '12px'
-			}, {
-				xtype: 'button',
-				itemId: 'xLogin',
-				id: 'login_btn',
-				cls: 'cust-btn login-btn',
-				text: 'LOG IN',
-				listeners:
+    ],
+    config: {
+        id: 'xLoginView',
+        cls: 'page-bg',
+        title: 'Login',
+        padding: '15px',
+        scrollable: 'none',
+        items: [{
+            xtype: 'image',
+            src: 'resources/images/logo.png',
+            cls: 'logo'
+        }, {
+            xtype: 'spacer',
+            height: '14px'
+        }, {
+            xtype: 'panel',
+            cls: 'login-box',
+            height: '254px',
+            items: [{
+                xtype: 'emailfield',
+                placeHolder: 'Email',
+                itemId: 'txtUserName',
+                id: 'txtLogin',
+                name: 'txtUserName',
+                cls: 'cust-input cust-input-user',
+                clearIcon: false,
+                required: true,
+                autoCapitalize: false
+            }, {
+                xtype: 'passwordfield',
+                maxHeight: '20px',
+                placeHolder: '******',
+                id: 'txtPassword',
+                padding: '4px 0px;',
+                itemId: 'txtPassword',
+                name: 'txtPassword',
+                cls: 'cust-input cust-input-pwd',
+                clearIcon: false,
+                required: true,
+                autoCapitalize: false
+            }, {
+                xtype: 'spacer',
+                height: '12px'
+            }, {
+                xtype: 'button',
+                itemId: 'xLogin',
+                id: 'login_btn',
+                cls: 'cust-btn login-btn',
+                text: 'LOG IN',
+                listeners:
 					{
-						painted: function () {
-							this.enable();
-							this.focus();
-						}
+					    painted: function ()
+					    {
+					        this.enable();
+					    }
 					}
-			}, {
-				xtype: 'label',
-				id: 'xForgetPassword',
-				html: 'Lost your password?',
-				cls: 'left cust-label'
-			}, {
-				xtype: 'label',
-				id: 'xSignup',
-				html: 'Need to set up a New Account?',
-				cls: 'right cust-label'
-			}, {
-				xtype: 'spacer',
-				cls: 'clear',
-				height: '27px',
-			}, {
-				xtype: 'button',
-				id: 'xFacebookLoginButton',
-				text: 'LOG IN WITH FACEBOOK',
-				cls: 'cust-btn fb-login-btn'
-			},			
-			],
-		}],
+            }, {
+                xtype: 'label',
+                id: 'xForgetPassword',
+                html: 'Lost your password?',
+                cls: 'left cust-label'
+            }, {
+                xtype: 'label',
+                id: 'xSignup',
+                html: 'Need to set up a New Account?',
+                cls: 'right cust-label'
+            }, {
+                xtype: 'spacer',
+                cls: 'clear',
+                height: '27px',
+            }, {
+                xtype: 'button',
+                id: 'xFacebookLoginButton',
+                text: 'LOG IN WITH FACEBOOK',
+                cls: 'cust-btn fb-login-btn'
+            },
+            ],
+        }],
 
-		listeners: [{
-			delegate: "#xLogin",
-			fn: "onLoginTap",
-			event: "tap",
-		}, {
-			delegate: "#xFacebookLoginButton",
-			fn: "onFacebookLoginTap",
-			event: "tap",
-		}, {
-			delegate: 'div#xSignup',
-			fn: 'onSignupTap',
-			element: 'element',
-			event: 'tap',
-		}, {
-			delegate: 'div#xForgetPassword',
-			fn: 'onForgetPasswordTap',
-			event: 'tap',
-			element: 'element',
-		}]
-	},
+        listeners: [{
+            delegate: "#xLogin",
+            fn: "onLoginTap",
+            event: "tap",
+        }, {
+            delegate: "#xFacebookLoginButton",
+            fn: "onFacebookLoginTap",
+            event: "tap",
+        }, {
+            delegate: 'div#xSignup',
+            fn: 'onSignupTap',
+            element: 'element',
+            event: 'tap',
+        }, {
+            delegate: 'div#xForgetPassword',
+            fn: 'onForgetPasswordTap',
+            event: 'tap',
+            element: 'element',
+        }]
+    },
 
-	onLoginTap: function () {
-		Ext.getCmp('login_btn').setDisabled(true);
-		this.fireEvent('AuthentificateCommand', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue(), 'xLoginView');
-		Ext.getCmp('txtPassword').blur();
-	},
+    onLoginTap: function ()
+    {
+        Ext.getCmp('login_btn').setDisabled(true);
+        this.fireEvent('AuthentificateCommand', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue(), 'xLoginView');
+        Ext.getCmp('txtPassword').blur();
+    },
 
-	onFacebookLoginTap: function () {
-		fb_login();
-		
-		//login();
-		//var deviceId = smiley360.services.getDeviceId();
+    onFacebookLoginTap: function ()
+    {
+        
+        if (navigator.userAgent.match(/Android/i))
+        
+        {var deviceId = smiley360.services.getDeviceId();
 
-		//console.log('Login -> login to Facebook with deviceId: ', deviceId);
+        console.log('Login -> login to Facebook with deviceId: ', deviceId);
 
-		//Ext.getCmp('xLoginView').fireEvent('setToolId', 'login');
-		//Ext.getStore('toolsStore').sync();
+        Ext.getCmp('xLoginView').fireEvent('setToolId', 'login');
+        Ext.getStore('toolsStore').sync();
 
-		//window.location =
-        //    smiley360.configuration.getServerDomain() +
-        //    'oauth/Facebook.html?deviceId=' + deviceId + '&scope=offline_access,email,read_stream';
-	},
+        window.location =
+            smiley360.configuration.getServerDomain() +
+            'oauth/Facebook.html?deviceId=' + deviceId + '&scope=offline_access,email,read_stream';
+        }
+        else fb_login();
+    },
 
-	onTwitterLoginTap: function () {
-		var deviceId = smiley360.services.getDeviceId();
+    onTwitterLoginTap: function ()
+    {
+        var deviceId = smiley360.services.getDeviceId();
 
-		console.log('Login -> login to Twitter with deviceId: ', deviceId);
+        console.log('Login -> login to Twitter with deviceId: ', deviceId);
 
-		window.location =
+        window.location =
 	        smiley360.configuration.getServerDomain() +
 	        'oauth/Twitter.html?deviceId=' + deviceId;
-	},
+    },
 
-	onSignupTap: function () {
-		//================================
-		console.log("onSignupTap");
-		//================================
-		this.fireEvent('ShowSignupViewCommand', this);
-	},
+    onSignupTap: function ()
+    {
+        //================================
+        console.log("onSignupTap");
+        //================================
+        this.fireEvent('ShowSignupViewCommand', this);
+    },
 
-	onForgetPasswordTap: function () {
-		Ext.widget('forgetpasswordview').show();
-	},
+    onForgetPasswordTap: function ()
+    {
+        Ext.widget('forgetpasswordview').show();
+    },
 });
