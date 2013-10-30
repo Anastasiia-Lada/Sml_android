@@ -577,7 +577,7 @@ Ext.define('Ext.ux.Fileup', {
                                 {
                                     if (me.failureHandler)
                                     {
-                                    	me.failureHandler('failure',response);
+                                        me.failureHandler(response);
                                     }
                                     else                                                       // Failure
                                         me.fireEvent('failure', response.message, response, this, e);
@@ -585,7 +585,7 @@ Ext.define('Ext.ux.Fileup', {
                                 {
                                     if (me.failureHandler)
                                     {
-                                    	me.failureHandler('failure',response);
+                                        me.failureHandler(response);
                                     }
                                     else                                                         // Failure
                                         me.fireEvent('failure', 'Unknown error', response, this, e);

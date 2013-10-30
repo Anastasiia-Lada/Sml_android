@@ -107,6 +107,7 @@
 				ui: 'plain',
 				listeners: {
 					tap: function () {
+
 						Ext.getCmp('xMainView').hideSidePanel();
 
 						Ext.getCmp('xSideMenu').fireEvent('updateDeviceId');

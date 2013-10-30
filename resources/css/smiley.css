@@ -1,4 +1,4 @@
-#xBrandView .x-scroll-scroller {x-field-checkbox
+#xBrandView .x-scroll-scroller {
 	position: relative;
 }
 
@@ -123,8 +123,9 @@
 	background-color: transparent !important;
 }
 
-	.popup-checkbox .x-field-input {		
-		position: relative;
+	.popup-checkbox .x-field-input {
+		min-width: 100%;
+		position: absolute;
 	}
 
 	.popup-checkbox .x-input-el {
@@ -155,10 +156,6 @@
 			-webkit-mask-repeat: no-repeat;
 			-webkit-mask-position: center;
 		}
-.popup-checkbox .x-field-mask
-{
-	width:100px;
-}
 
 .popup-checkbox-grey-label {
 	margin: 0px 0px 0px 0px;
@@ -295,13 +292,12 @@
 }
 
 .popup-photo-image {
-	margin: 5px 5px 5px 0px !important;
-	padding: 0px !important;
+	margin: 5px 5px 5px 0px;
 	border: 3px;
 	border-style: solid;
 	border-color: white;
 	border-radius: 8px;
-	background-size: auto auto !important;
+	background-size: 100% auto !important;
 }
 
 .popup-photo-button {
@@ -342,11 +338,6 @@
 	/*overflow: hidden;*/
 }
 
-.popup-survey-iframe-new {
-	width: 100%;
-	height: 100%;
-	/*overflow: hidden;*/
-}
 /********************************************************************************************/
 .link-background {
 	background: -webkit-linear-gradient(top, #847F7B 0%, #514D4A 100%);
