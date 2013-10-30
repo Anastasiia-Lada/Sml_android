@@ -13,7 +13,7 @@ Ext.define('smiley360.view.Survey', {
 				xtype: 'panel',
 				margin: '0px -16px 0px 0px',
 				style: '-webkit-overflow-scrolling: touch ; height: 100%; overflow: auto;',
-				html: '<iframe id="xSurveyFrame" frameborder="0" scrolling="yes" class="popup-survey-iframe"></iframe>',
+				html: '<iframe id="xSurveyFrame" frameborder="0" scrolling="yes" class="popup-survey-iframe-new"></iframe>',
 			}],
 			listeners: {
 				painted: function () {
