@@ -58,8 +58,7 @@
     <!-- The line below must be kept intact for Sencha Command to build your application -->
     <script src="jquery-2.0.3.js"></script>
     <script src="phonegap.js"></script>
-    <script src="splashscreen.js"></script>   
-    <script type="text/javascript" src="plupload.full.min.js"></script>
+    <script src="splashscreen.js"></script> 
     <script src="cordova.js"></script>
     <!-- cordova facebook plugin -->
     <script src="cdv-plugin-fb-connect.js"></script>
@@ -188,7 +187,7 @@
 
     function onBodyLoad() {
         alert('loaded');
-        //document.addEventListener('deviceready', function () {
+        document.addEventListener('deviceready', function () {
             FB.init({
                 appId: "213563938819286",
                 nativeInterface: CDV.FB,
@@ -200,8 +199,8 @@
             });
             //document.getElementById('data').innerHTML = "";
             //navigator.splashscreen.hide();
-            //Ext.Msg.alert('deviceready');
-        //}, false);
+            alert('!deviceready');
+        }, false);
     }
             </script>
         <div id="log"></div>
