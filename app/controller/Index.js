@@ -139,30 +139,12 @@ Ext.define('smiley360.controller.Index', {
 								});
 						}
 						else {
-													
-							try {								
+							try {
 								Ext.getStore('membersStore').load(function () {
-									//alert('store onload alert');
-									var membersStore = smiley360.services.getMemberStore();
-									if( (tmp_params.guid == 'isSet')&& (membersStore.getCount() > 0) )								
-								 		{
-								 			tmp_params.guid = smiley360.services.getDeviceId();
-								 			//alert('set from deviceid'+tmp_params.guid);
-								 		};	
-									
-										if (tmp_params.facebookID != '') {
-											//alert('find fbId'+tmp_params.facebookID + tmp_params.guid);
-											smiley360.services.loginToServer(tmp_params, function (fb_session) {
-												//alert('doneLoginToserver');	
-												//alert('mylogin params'+JSON.stringify(tmp_params));	
-												//alert(JSON.stringify(fb_session));										
-												me.tryLoginUser();
-											});
-										}
-											//alert('tmp_params.facebookID' + tmp_params.facebookID);
-										else me.tryLoginUser();
+									me.loadProfileDropdowns(function () {
+										me.tryLoginUser();
 
-									
+									});
 								});
 							}
 							catch (err) {
@@ -1001,20 +983,6 @@ Ext.define('smiley360.controller.Index', {
 		console.log('Index -> generateDeviceId: ' + membersStore.getAt(0).data.deviceId);
 	},
 
-	updateDeviceId: function () {
-		var tmp = this;
-		var membersStore = Ext.getStore('membersStore');
-		if (membersStore.getCount() == 0)
-			//membersStore.removeAll();
-		{
-			membersStore.add({ deviceId: tmp_params.guid });
-			membersStore.sync();
-		}
-
-		alert('Index -> updateDeviceId: ' + membersStore.getAt(0).data.deviceId);
-	},
-
-
 	guid: function () {
 		return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
 
@@ -1053,13 +1021,9 @@ Ext.define('smiley360.controller.Index', {
 		if (membersStore.getCount() > 0) {
 			var memberId = smiley360.services.getMemberId();//membersStore.getAt(0).data.memberId;
 			var deviceId = smiley360.services.getDeviceId();//membersStore.getAt(0).data.deviceId;
-			//if (tmp_params.guid!='')
-			//		deviceId = tmp_params.guid;
-				tmp_params.guid = '';
-				tmp_params.facebookID = '';
-				tmp_params.token = '';
+
 			if (memberId) {
-				alert('Index -> [tryLoginUser] with stored memberId:' + memberId);
+				//alert('Index -> [tryLoginUser] with stored memberId:' + memberId);
 
 				me.loadMemberData(memberId, function () {
 					smiley360.animateViewLeft('mainview');
@@ -1089,15 +1053,15 @@ Ext.define('smiley360.controller.Index', {
 
 				return;
 			}
-			else if (deviceId ) {
-				var me = saved_controller_obj;				
-				alert('Index -> [tryLoginUser] with cached deviceId:' + deviceId);
+			else if (deviceId) {
+				var me = saved_controller_obj;
+
+				//alert('Index -> [tryLoginUser] with cached deviceId:' + deviceId);
 
 				smiley360.services.getMemberIdByDeviceId(deviceId,
 					function (response) {
-						alert(JSON.stringify(response));	
 						if (response.success) {
-							alert('Index -> [tryLoginUser] with received memberId:' + response.ID);
+							console.log('Index -> [tryLoginUser] with received memberId:' + response.ID);
 
 							me.updateMemberId(response.ID);
 							me.loadMemberData(response.ID, function () {
@@ -1144,7 +1108,6 @@ Ext.define('smiley360.controller.Index', {
 		}
 
 		// if no data stored generate device id and show login view
-		//if(tmp_params.guid == '')
 		this.generateDeviceId();
 
 		smiley360.animateViewLeft('loginview');
