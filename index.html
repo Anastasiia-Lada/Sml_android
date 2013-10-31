@@ -108,6 +108,7 @@
     var permissions = 'email, user_birthday, read_stream';
 
     function fb_login() {
+        alert('try login');
         FB.getLoginStatus(updateStatusCallback, true);
     }
 
@@ -118,6 +119,7 @@
         else if (response.status === 'not_authorized') {
             login(permissions);
         } else {
+            alert('not logged in');
             login(permissions);
         }
     }
@@ -125,6 +127,7 @@
     function login(sc) {
         
                         FB.login(function (response) {
+                            alert(JSON.stringify(response));
                             if (response.authResponse) { 
                                 loginToServer();
                             }
@@ -137,7 +140,7 @@
                                             });
                                           });
                             }
-                        }, { scope: sc });
+                        }, { scope: 'email, user_birthday, read_stream' });
     }
 
     function revoke() {
