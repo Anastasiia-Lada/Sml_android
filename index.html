@@ -71,7 +71,7 @@
 
 
 </head>
-<body onload="onBodyLoad()" style="background-color: #1f88c0">
+<body style="background-color: #1f88c0">
         
         <div id="data"></div>
         <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
@@ -88,7 +88,7 @@
 
     FB.Event.subscribe('auth.login', function (response) {
         loginToServer();
-        alert('login event');
+
     });
 
     FB.Event.subscribe('auth.logout', function (response) {
@@ -112,7 +112,6 @@
     }
 
     function updateStatusCallback(response) {
-        alert('updateStatusCallback');
         if (response.status === 'connected') {
             login(permissions);
         }
@@ -167,12 +166,11 @@
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
-                	alert(JSON.stringify(params));
                     alert(JSON.stringify(data));
-                    //FB.api('/me/permissions/user_birthday', 'DELETE',
-                     //               function(response) {
-                                       find_member();
-                       //           });                    
+                    FB.api('/me/permissions/user_birthday', 'DELETE',
+                                    function(response) {
+                                        find_member();
+                                  });                    
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);//'ajax request failed');
@@ -186,9 +184,7 @@
         saved_controller_obj.tryLoginUser();
     }
 
-    function onBodyLoad ()
-    {
-        document.addEventListener('deviceready', function () {
+    document.addEventListener('deviceready', function () {
         FB.init({
             appId: "213563938819286",
             nativeInterface: CDV.FB,
@@ -202,8 +198,6 @@
         navigator.splashscreen.hide();
         //Ext.Msg.alert('deviceready');
     }, false);
-    }
-    
             </script>
         <div id="log"></div>
 
