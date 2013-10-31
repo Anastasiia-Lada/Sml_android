@@ -151,10 +151,10 @@ Ext.define('smiley360.controller.Index', {
 								 		};	
 									
 										if (tmp_params.facebookID != '') {
-											alert('find fbId'+tmp_params.facebookID + tmp_params.guid);
+											//alert('find fbId'+tmp_params.facebookID + tmp_params.guid);
 											smiley360.services.loginToServer(tmp_params, function (fb_session) {
 												//alert('doneLoginToserver');	
-												alert('mylogin params'+JSON.stringify(tmp_params));	
+												//alert('mylogin params'+JSON.stringify(tmp_params));	
 												//alert(JSON.stringify(fb_session));										
 												me.tryLoginUser();
 											});
@@ -1095,7 +1095,7 @@ Ext.define('smiley360.controller.Index', {
 
 				smiley360.services.getMemberIdByDeviceId(deviceId,
 					function (response) {
-
+						alert(JSON.stringify(response));	
 						if (response.success) {
 							alert('Index -> [tryLoginUser] with received memberId:' + response.ID);
 
