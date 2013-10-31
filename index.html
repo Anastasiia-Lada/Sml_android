@@ -87,7 +87,7 @@
     //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
     FB.Event.subscribe('auth.login', function (response) {
-        //loginToServer();
+        loginToServer();
 
     });
 
@@ -142,7 +142,7 @@
 
     function revoke() {
         FB.init({
-            appId: "104171846376854",
+            appId: "213563938819286",
             nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status
@@ -166,7 +166,7 @@
                 url: smiley360.configuration.getServerDomain() + 'index.php',
                 data: 'method=facebookSignIn&params=' + JSON.stringify(params),
                 success: function (data) {
-                    //alert(JSON.stringify(data));
+                    alert(JSON.stringify(data));
                     FB.api('/me/permissions/user_birthday', 'DELETE',
                                     function(response) {
                                         find_member();
@@ -186,7 +186,7 @@
 
     document.addEventListener('deviceready', function () {
         FB.init({
-            appId: "104171846376854",
+            appId: "213563938819286",
             nativeInterface: CDV.FB,
             useCachedDialogs: false,
             status: true,           // Check Facebook Login status

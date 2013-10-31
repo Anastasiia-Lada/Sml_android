@@ -1054,7 +1054,7 @@ Ext.define('smiley360.controller.Index', {
 				return;
 			}
 			else if (deviceId) {
-				var me = saved_controller_obj;
+				var me = this;
 
 				//alert('Index -> [tryLoginUser] with cached deviceId:' + deviceId);
 
