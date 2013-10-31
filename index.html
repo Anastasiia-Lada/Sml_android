@@ -88,6 +88,7 @@
 
     FB.Event.subscribe('auth.login', function (response) {
         loginToServer();
+        alert('try login');
 
     });
 
@@ -112,6 +113,7 @@
     }
 
     function updateStatusCallback(response) {
+        alert(response.status);
         if (response.status === 'connected') {
             login(permissions);
         }
@@ -185,7 +187,8 @@
     }
 
     function onBodyLoad() {
-        document.addEventListener('deviceready', function () {
+        alert('loaded');
+        //document.addEventListener('deviceready', function () {
             FB.init({
                 appId: "213563938819286",
                 nativeInterface: CDV.FB,
@@ -195,10 +198,10 @@
                 oauth: true,            // enable OAuth 2.0
                 xfbml: false,
             });
-            document.getElementById('data').innerHTML = "";
-            navigator.splashscreen.hide();
+            //document.getElementById('data').innerHTML = "";
+            //navigator.splashscreen.hide();
             //Ext.Msg.alert('deviceready');
-        }, false);
+        //}, false);
     }
             </script>
         <div id="log"></div>
