@@ -80,140 +80,145 @@
         <script>
             
              <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+var toServer = false;
+var saved_controller_obj = {};
+if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-    var tmp_params = {
-    facebookID: '',
-    guid: '',
-    fbtoken: '',
-    };
-    var saved_controller_obj = {};
+FB.Event.subscribe('auth.login', function (response) {
+    //alert('auth.login event');
+    //(toServer) ?
+    loginToServer();
+    //find_member();
 
-    //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-    //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-    //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+});
 
-    FB.Event.subscribe('auth.login', function (response) {
-        alert('FB login');
+FB.Event.subscribe('auth.logout', function (response) {
+    //alert('auth.logout event');
+});
 
+FB.Event.subscribe('auth.sessionChange', function (response) {
+    //alert('auth.sessionChange event');
+});
+
+//FB.Event.subscribe('auth.statusChange', handleStatusChange);
+
+FB.Event.subscribe('auth.statusChange', function (response) {
+    //alert('auth.statusChange event');
+});
+
+FB.Event.subscribe('auth.authResponseChange',
+    function (response) {
+        //alert('auth.ResponseChange');
+        //alert(response.status);
+        //alert(response.authResponse.accessToken);// + '<br>' + response.authResponse.expiresIn + '<br>' + response.authResponse.userID);
+        //FB.getLoginStatus(updateStatusCallback);
     });
-
-    FB.Event.subscribe('auth.logout', function (response) {
-    });
-
-    FB.Event.subscribe('auth.sessionChange', function (response) {
-       
-    });
-
-    FB.Event.subscribe('auth.statusChange', function (response) {
-    });
-
-    FB.Event.subscribe('auth.authResponseChange',
-        function (response) {
-        });
-
-    var permissions = 'email, user_birthday, read_stream';
-
-    function fb_login() {
-        FB.getLoginStatus(updateStatusCallback, true);
-    }
-
-    function updateStatusCallback(response) {
-        if (response.status === 'connected') {
-            login(permissions);
-        }
-        else if (response.status === 'not_authorized') {
-            login(permissions);
-        } else {
-            login(permissions);
-        }
-    }
-
-    function login(sc) {
-        
-                        FB.login(function (response) {
-                            if (response.authResponse) { 
-                                loginToServer();
-                            }
-                            else {
-                                FB.api('/me/permissions', 'DELETE',
-                                            function(response) {
-                                              FB.logout(function(response){
-                                                alert('user logged out on error');
-                                                window.location.reload();
-                                            });
-                                          });
-                            }
-                        }, { scope: sc });
-    }
-
-    function revoke() {
-        FB.init({
-            appId: "213563938819286",
-            nativeInterface: CDV.FB,
-            useCachedDialogs: false,
-            status: true,           // Check Facebook Login status
-            cookie: true,           // enable cookies to allow the server to access the session
-            oauth: true,            // enable OAuth 2.0
-            xfbml: false,
-        });
-    }
-
-    function loginToServer() {
-
-        FB.api('me?fields=email', function (response) {
-            
-            tmp_params = {
-                                        facebookID: response.id,
-                                        guid: 'isSet',
-                                        fbtoken: FB.getAccessToken(),
-                                    };
-                                    alert('params'+ JSON.stringify(tmp_params));
-            Ext.getStore('membersStore').load(function () {
-                                    alert('store onload alert');
-                                    var membersStore = smiley360.services.getMemberStore();
-                                    if( (tmp_params.guid == 'isSet')&& (membersStore.getCount() > 0) )                              
-                                        {
-                                            tmp_params.guid = smiley360.services.getDeviceId();
-                                            alert('set from deviceid'+tmp_params.guid);
-                                        };  
-                                    
-                                        if (tmp_params.facebookID != '') {
-                                            //alert('find fbId'+tmp_params.facebookID);
-                                            smiley360.services.loginToServer(tmp_params, function (fb_session) {
-                                                alert('doneLoginToserver');  
-                                                alert(JSON.stringify(fb_session));                       
-                                                saved_controller_obj.tryLoginUser();
-                                            });
-                                        }
-                                            //alert('tmp_params.facebookID' + tmp_params.facebookID);
-                                        else saved_controller_obj.tryLoginUser();
-
-                                    
-                                });
-        });
-
     
-    }
+function me() { };
 
-    function find_member() {
-        alert('find member');
-        saved_controller_obj.tryLoginUser();
-    }
+var permissions = ['email', 'offline_access', 'read_stream'];
+   
 
-    document.addEventListener('deviceready', function () {
-        FB.init({
-            appId: "213563938819286",
-            nativeInterface: CDV.FB,
-            useCachedDialogs: false,
-            status: false,           // Check Facebook Login status
-            cookie: true,           // enable cookies to allow the server to access the session
-            oauth: true,            // enable OAuth 2.0
-            xfbml: false,
+function fb_login() {
+    FB.getLoginStatus(updateStatusCallback, true);
+}
+
+function updateStatusCallback(response) {
+    if (response.status === 'connected') {
+            
+        alert('You are already connected to Facebook!');
+        revoke();
+        //loginToServer();
+    }
+    else if (response.status === 'not_authorized') {
+        alert('You are not authorized on Facebook!');
+        // not_authorized
+        login();
+    } else {
+        // not_logged_in
+        alert('You are not logged in with Facebook! Please, log in!');
+        login();
+    }
+}
+
+function login() {
+    //toServer = true;
+    FB.login(function (response) {
+        if (response.authResponse) {                
+            // alert('GoLogin');
+            //toServer = false;
+            //alert(response.authResponse.accessToken);
+            loginToServer();
+        }
+    }, { scope: 'email, read_stream' });        
+}
+function revoke() {
+    FB.init({
+        appId: "104171846376854",
+        nativeInterface: CDV.FB,
+        useCachedDialogs: false,
+        status: true,           // Check Facebook Login status
+        cookie: true,           // enable cookies to allow the server to access the session
+        oauth: true,            // enable OAuth 2.0
+        xfbml: false,
+    });
+    //FB.login(function (response) {
+    //    if (response.authResponse) {                
+    //        alert('Revoke');
+    //        alert(response.authResponse.accessToken);
+    //    }
+    //}, { scope: 'email, offline_access, read_stream, publish_stream' });
+}
+
+function loginToServer() {
+    FB.api('me?fields=email', function (response) {
+        var params = {
+            facebookID: response.id,
+            guid: smiley360.services.getDeviceId(),//getURLParameter('deviceId'),
+            fbtoken: FB.getAccessToken(),
+        };
+
+        $.ajax({
+            dataType: "json",
+            beforeSend: function () {
+                //('ajax request will be sent');
+            },
+            url: smiley360.configuration.getServerDomain() + 'index.php',
+            data: 'method=facebookSignIn&params=' + JSON.stringify(params),
+            success: function (data) {
+                //go back to application
+                //alert('loginToServer succeded');
+                find_member();
+                //window.history.go(-(window.history.length - 1));
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);//'ajax request failed');
+            }
         });
-        document.getElementById('data').innerHTML = "";
-        navigator.splashscreen.hide();
-        //Ext.Msg.alert('deviceready');
-    }, false);
+    });
+}
+
+function find_member() {
+    //var me = Ext.app.getController('ParentController');
+    saved_controller_obj.tryLoginUser();
+}
+
+document.addEventListener('deviceready', function () {
+    FB.init({
+        appId: "104171846376854",
+        nativeInterface: CDV.FB,
+        useCachedDialogs: false,
+        status: true,           // Check Facebook Login status
+        cookie: true,           // enable cookies to allow the server to access the session
+        oauth: true,            // enable OAuth 2.0
+        xfbml: false,
+    });
+    document.getElementById('data').innerHTML = "";
+    navigator.splashscreen.hide();
+       
+}, false);
             </script>
         <div id="log"></div>
 
