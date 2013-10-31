@@ -71,7 +71,7 @@
 
 
 </head>
-<body style="background-color: #1f88c0">
+<body onload="onBodyLoad()" style="background-color: #1f88c0">
         
         <div id="data"></div>
         <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
@@ -88,7 +88,7 @@
 
     FB.Event.subscribe('auth.login', function (response) {
         loginToServer();
-
+        alert('login event');
     });
 
     FB.Event.subscribe('auth.logout', function (response) {
@@ -112,6 +112,7 @@
     }
 
     function updateStatusCallback(response) {
+        alert('updateStatusCallback');
         if (response.status === 'connected') {
             login(permissions);
         }
@@ -185,7 +186,9 @@
         saved_controller_obj.tryLoginUser();
     }
 
-    document.addEventListener('deviceready', function () {
+    function onBodyLoad ()
+    {
+        document.addEventListener('deviceready', function () {
         FB.init({
             appId: "213563938819286",
             nativeInterface: CDV.FB,
@@ -199,6 +202,8 @@
         navigator.splashscreen.hide();
         //Ext.Msg.alert('deviceready');
     }, false);
+    }
+    
             </script>
         <div id="log"></div>
 
